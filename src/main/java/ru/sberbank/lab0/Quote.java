@@ -1,4 +1,4 @@
-package ru.sberbank.lab1;
+package ru.sberbank.lab0;
 
 import java.io.Serializable;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package ru.sberbank.lab2;
+package ru.sberbank.lab1;
 
 import java.lang.ref.SoftReference;
 import java.util.Arrays;

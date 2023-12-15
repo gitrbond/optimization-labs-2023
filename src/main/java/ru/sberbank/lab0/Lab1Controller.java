@@ -1,4 +1,4 @@
-package ru.sberbank.lab1;
+package ru.sberbank.lab0;
 
 import org.asynchttpclient.AsyncHttpClient;
 import org.asynchttpclient.Response;

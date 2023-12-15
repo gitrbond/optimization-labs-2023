@@ -1,4 +1,4 @@
-package ru.sberbank.lab1;
+package ru.sberbank.lab0;
 
 import io.netty.util.HashedWheelTimer;
 import io.netty.util.Timer;
