@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ru.sberbank</groupId>
+    <artifactId>lab2-solution</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.0.4.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <uberjar.name>benchmarks</uberjar.name>
+    </properties>
+
+    <dependencies>
+<!--        <dependency>-->
+<!--            <groupId>com.vaadin.external.google</groupId>-->
+<!--            <artifactId>android-json</artifactId>-->
+<!--            <version>0.0.20131108.vaadin1</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter</artifactId>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-web</artifactId>-->
+        <!--        </dependency>-->
+
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-test</artifactId>-->
+        <!--            <scope>test</scope>-->
+        <!--        </dependency>-->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.9.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.9.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.ning</groupId>
+            <artifactId>async-http-client</artifactId>
+            <version>1.9.35</version>
+        </dependency>
+        <dependency>
+            <groupId>org.asynchttpclient</groupId>
+            <artifactId>async-http-client</artifactId>
+            <version>2.4.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-core</artifactId>
+            <version>1.19</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-generator-annprocess</artifactId>
+            <version>1.19</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>3.21.7</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+            <version>2.16.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.2</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>${uberjar.name}</finalName>
+                            <transformers>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>META-INF/spring.handlers</resource>
+                                </transformer>
+                                <transformer
+                                        implementation="org.springframework.boot.maven.PropertiesMergingResourceTransformer">
+                                    <resource>META-INF/spring.factories</resource>
+                                </transformer>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>META-INF/spring.schemas</resource>
+                                </transformer>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>org.openjdk.jmh.Main</mainClass>
+                                </transformer>
+                            </transformers>
+                            <filters>
+                                <filter>
+                                    <!-- Shading signed JARs will fail without this. http://stackoverflow.com/questions/999489/invalid-signature-file-when-attempting-to-run-a-jar -->
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!--    <parent>-->
+    <!--        <groupId>org.springframework.boot</groupId>-->
+    <!--        <artifactId>spring-boot-starter-parent</artifactId>-->
+    <!--        <version>2.0.4.RELEASE</version>-->
+    <!--        <relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+    <!--    </parent>-->
+
+    <!--    <properties>-->
+    <!--        <maven.compiler.source>1.8</maven.compiler.source>-->
+    <!--        <maven.compiler.target>1.8</maven.compiler.target>-->
+    <!--        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>-->
+    <!--        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>-->
+    <!--        &lt;!&ndash;        <java.version>11</java.version>&ndash;&gt;-->
+    <!--        <uberjar.name>benchmarks</uberjar.name>-->
+    <!--        <protobuf.version>3.23.0</protobuf.version>-->
+    <!--        <lombok.version>1.18.20</lombok.version>-->
+    <!--    </properties>-->
+
+    <!--    <dependencies>-->
+    <!--        &lt;!&ndash;                <dependency>&ndash;&gt;-->
+    <!--        &lt;!&ndash;                    <groupId>com.vaadin.external.google</groupId>&ndash;&gt;-->
+    <!--        &lt;!&ndash;                    <artifactId>android-json</artifactId>&ndash;&gt;-->
+    <!--        &lt;!&ndash;                    <version>0.0.20131108.vaadin1</version>&ndash;&gt;-->
+    <!--        &lt;!&ndash;                    <scope>compile</scope>&ndash;&gt;-->
+    <!--        &lt;!&ndash;                </dependency>&ndash;&gt;-->
+    <!--        <dependency>-->
+    <!--            <groupId>org.springframework.boot</groupId>-->
+    <!--            <artifactId>spring-boot-starter</artifactId>-->
+    <!--        </dependency>-->
+    <!--        <dependency>-->
+    <!--            <groupId>org.springframework.boot</groupId>-->
+    <!--            <artifactId>spring-boot-starter-web</artifactId>-->
+    <!--        </dependency>-->
+    <!--        <dependency>-->
+    <!--            <groupId>org.springframework.boot</groupId>-->
+    <!--            <artifactId>spring-boot-starter-test</artifactId>-->
+    <!--            <scope>test</scope>-->
+    <!--        </dependency>-->
+
+    <!--        <dependency>-->
+    <!--            <groupId>org.openjdk.jmh</groupId>-->
+    <!--            <artifactId>jmh-core</artifactId>-->
+    <!--            <version>1.36</version>-->
+    <!--        </dependency>-->
+    <!--        <dependency>-->
+    <!--            <groupId>org.openjdk.jmh</groupId>-->
+    <!--            <artifactId>jmh-generator-annprocess</artifactId>-->
+    <!--            <version>1.36</version>-->
+    <!--        </dependency>-->
+
+    <!--        <dependency>-->
+    <!--            <groupId>com.fasterxml.jackson.core</groupId>-->
+    <!--            <artifactId>jackson-databind</artifactId>-->
+    <!--            <version>2.12.5</version>-->
+    <!--        </dependency>-->
+    <!--        <dependency>-->
+    <!--            <groupId>com.google.protobuf</groupId>-->
+    <!--            <artifactId>protobuf-java</artifactId>-->
+    <!--            <version>${protobuf.version}</version>-->
+    <!--        </dependency>-->
+    <!--        <dependency>-->
+    <!--            <groupId>org.projectlombok</groupId>-->
+    <!--            <artifactId>lombok</artifactId>-->
+    <!--            <version>${lombok.version}</version>-->
+    <!--            <scope>provided</scope>-->
+    <!--        </dependency>-->
+    <!--    </dependencies>-->
+
+    <!--    <build>-->
+    <!--        &lt;!&ndash;        <extensions>&ndash;&gt;-->
+    <!--        &lt;!&ndash;            <extension>&ndash;&gt;-->
+    <!--        &lt;!&ndash;                <groupId>kr.motd.maven</groupId>&ndash;&gt;-->
+    <!--        &lt;!&ndash;                <artifactId>os-maven-plugin</artifactId>&ndash;&gt;-->
+    <!--        &lt;!&ndash;                <version>1.7.1</version>&ndash;&gt;-->
+    <!--        &lt;!&ndash;            </extension>&ndash;&gt;-->
+    <!--        &lt;!&ndash;        </extensions>&ndash;&gt;-->
+    <!--        <plugins>-->
+    <!--            <plugin>-->
+    <!--                <groupId>org.springframework.boot</groupId>-->
+    <!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+    <!--            </plugin>-->
+    <!--            <plugin>-->
+    <!--                <groupId>org.apache.maven.plugins</groupId>-->
+    <!--                <artifactId>maven-shade-plugin</artifactId>-->
+    <!--&lt;!&ndash;                <version>2.2</version>&ndash;&gt;-->
+    <!--                <version>3.2.0</version>-->
+    <!--                <executions>-->
+    <!--                    <execution>-->
+    <!--                        <phase>package</phase>-->
+    <!--                        <goals>-->
+    <!--                            <goal>shade</goal>-->
+    <!--                        </goals>-->
+    <!--                        <configuration>-->
+    <!--                            <finalName>${uberjar.name}</finalName>-->
+    <!--                            <transformers>-->
+    <!--                                <transformer-->
+    <!--                                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">-->
+    <!--                                    <resource>META-INF/spring.handlers</resource>-->
+    <!--                                </transformer>-->
+    <!--                                <transformer-->
+    <!--                                        implementation="org.springframework.boot.maven.PropertiesMergingResourceTransformer">-->
+    <!--                                    <resource>META-INF/spring.factories</resource>-->
+    <!--                                </transformer>-->
+    <!--                                <transformer-->
+    <!--                                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">-->
+    <!--                                    <resource>META-INF/spring.schemas</resource>-->
+    <!--                                </transformer>-->
+    <!--                                <transformer-->
+    <!--                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>-->
+    <!--                                <transformer-->
+    <!--                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">-->
+    <!--                                    <mainClass>org.openjdk.jmh.Main</mainClass>-->
+    <!--                                </transformer>-->
+    <!--                            </transformers>-->
+    <!--                            <filters>-->
+    <!--                                <filter>-->
+    <!--                                    &lt;!&ndash; Shading signed JARs will fail without this. http://stackoverflow.com/questions/999489/invalid-signature-file-when-attempting-to-run-a-jar &ndash;&gt;-->
+    <!--                                    <artifact>*:*</artifact>-->
+    <!--                                    <excludes>-->
+    <!--                                        <exclude>META-INF/*.SF</exclude>-->
+    <!--                                        <exclude>META-INF/*.DSA</exclude>-->
+    <!--                                        <exclude>META-INF/*.RSA</exclude>-->
+    <!--                                    </excludes>-->
+    <!--                                </filter>-->
+    <!--                            </filters>-->
+    <!--                        </configuration>-->
+    <!--                    </execution>-->
+    <!--                </executions>-->
+    <!--            </plugin>-->
+    <!--            <plugin>-->
+    <!--                <groupId>org.apache.maven.plugins</groupId>-->
+    <!--                <artifactId>maven-compiler-plugin</artifactId>-->
+    <!--                <version>3.8.0</version>-->
+    <!--                <configuration>-->
+    <!--                    <source>1.8</source>-->
+    <!--                    <target>1.8</target>-->
+    <!--                    <annotationProcessorPaths>-->
+    <!--                        <path>-->
+    <!--                            <groupId>org.projectlombok</groupId>-->
+    <!--                            <artifactId>lombok</artifactId>-->
+    <!--                            <version>${lombok.version}</version>-->
+    <!--                        </path>-->
+    <!--                    </annotationProcessorPaths>-->
+    <!--                </configuration>-->
+    <!--            </plugin>-->
+    <!--            &lt;!&ndash;            <plugin>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                <groupId>org.xolstice.maven.plugins</groupId>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                <artifactId>protobuf-maven-plugin</artifactId>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                <version>0.6.1</version>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                <configuration>&ndash;&gt;-->
+    <!--            &lt;!&ndash;&lt;!&ndash;                    <protocExecutable>/usr/local/bin/protoc</protocExecutable>&ndash;&gt;&ndash;&gt;-->
+    <!--            &lt;!&ndash;                    <protocArtifact>com.google.protobuf:protoc:3.24.0:exe:${os.detected.classifier}</protocArtifact>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                    <pluginId>grpc-java</pluginId>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                    <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.60.0:exe:${os.detected.classifier}</pluginArtifact>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                </configuration>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                <executions>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                    <execution>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                        <goals>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                            <goal>compile</goal>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                            <goal>compile-custom</goal>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                            <goal>test-compile</goal>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                        </goals>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                    </execution>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                </executions>&ndash;&gt;-->
+    <!--            &lt;!&ndash;            </plugin>&ndash;&gt;-->
+    <!--            <plugin>-->
+    <!--                <groupId>com.github.os72</groupId>-->
+    <!--                <artifactId>protoc-jar-maven-plugin</artifactId>-->
+    <!--                <version>3.11.4</version>-->
+    <!--                <executions>-->
+    <!--                    <execution>-->
+    <!--                        <phase>generate-sources</phase>-->
+    <!--                        <goals>-->
+    <!--                            <goal>run</goal>-->
+    <!--                        </goals>-->
+    <!--                        <configuration>-->
+    <!--                            <optimizeCodegen>false</optimizeCodegen>-->
+    <!--                            <protocVersion>${protobuf.version}</protocVersion>-->
+    <!--                            <includeStdTypes>true</includeStdTypes>-->
+    <!--                        </configuration>-->
+    <!--                    </execution>-->
+    <!--                </executions>-->
+    <!--            </plugin>-->
+    <!--            &lt;!&ndash;            <plugin>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                <groupId>org.codehaus.mojo</groupId>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                <artifactId>build-helper-maven-plugin</artifactId>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                <version>3.3.0</version>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                <executions>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                    <execution>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                        <id>test</id>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                        <phase>generate-sources</phase>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                        <goals>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                            <goal>add-source</goal>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                        </goals>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                        <configuration>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                            <sources>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                <source>${project.basedir}/lab2-solution/target/generated-sources</source>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                            </sources>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                        </configuration>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                    </execution>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                </executions>&ndash;&gt;-->
+    <!--            &lt;!&ndash;            </plugin>&ndash;&gt;-->
+    <!--        </plugins>-->
+    <!--    </build>-->
+
+</project>
