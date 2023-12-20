@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package protobuf;
+
+option java_package = "ru.sberbank.lab2.protobuf";
+option java_outer_classname = "PlainProto";
+
+message PlainDto {
+  string field1 = 1;
+  int32 field2 = 2;
+  double field3 = 3;
+  bool field4 = 4;
+}

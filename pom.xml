@@ -19,6 +19,7 @@
     </properties>
 
     <modules>
+        <module>lab2-solution</module>
         <module>lectures</module>
     </modules>
 </project>
