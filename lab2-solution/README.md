@@ -1,10 +1,13 @@
-Лабораторная работа 2
+# Лабораторная работа 2 по Оптимизации программ. Роман Бондарь
 
-Результаты:
+В работе исследованы два подхода к сериализации и десериализации объектов в Java: 
+при помощи библиотек *com.fasterxml.jackson.dataformat* и *com.google.protobuf*.
+
+## Jackson
 
 Benchmark                                                              Mode  Cnt         Score        Error  Units
-ru.sberbank.lab2.jmhjson.JsonSerializeAndDeserialize.serializationAndDeserializationJson       thrpt   20     29662,133 ±   1630,967  ops/s
-ru.sberbank.lab2.jmhjson.ProtoSerializeAndDeserialize.serializationAndDeserializationProtobuf  thrpt   20  20293890,463 ± 144029,869  ops/s
+ru.sberbank.lab2.jmhjson.JacksonBenchmark.serializationAndDeserializationJson       thrpt   20     29662,133 ±   1630,967  ops/s
+ru.sberbank.lab2.jmhjson.ProtobufBenchmark.serializationAndDeserializationProtobuf  thrpt   20  20293890,463 ± 144029,869  ops/s
 
 Сериализация и десериализация JSON на Java в режиме Protobuf быстрее, чем в обычном режиме, по нескольким причинам:
 * Protobuf использует двоичный формат, а JSON - текстовый. Двоичный формат более компактен, чем текстовый, что означает, что для сериализации и десериализации объекта требуется меньше данных.

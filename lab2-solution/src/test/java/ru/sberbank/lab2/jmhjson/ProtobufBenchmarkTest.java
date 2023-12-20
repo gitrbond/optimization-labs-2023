@@ -2,28 +2,17 @@ package ru.sberbank.lab2.jmhjson;
 
 import org.junit.jupiter.api.Test;
 import ru.sberbank.lab2.jmhjson.utils.TestData;
-import ru.sberbank.lab2.protobuf.ComplexProto;
-import ru.sberbank.lab2.protobuf.PlainProto;
+import ru.sberbank.lab2.jmhjson.protobuf.ComplexProto;
+import ru.sberbank.lab2.jmhjson.protobuf.PlainProto;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static ru.sberbank.lab2.jmhjson.utils.TestData.*;
+import static ru.sberbank.lab2.jmhjson.utils.TestData.COMPLEX_PROTO;
+import static ru.sberbank.lab2.jmhjson.utils.TestData.PLAIN_PROTO;
 
-public class ProtoSerializeAndDeserializeTest {
-//    OutputStream output = new OutputStream() {
-//        private StringBuilder string = new StringBuilder();
-//
-//        @Override
-//        public void write(int b) throws IOException {
-//            this.string.append((char) b );
-//        }
-//
-//        public String toString() {
-//            return this.string.toString();
-//        }
-//    };
-
+public class ProtobufBenchmarkTest {
     @Test
     void protoPlainSerializeAndDeserializeTest() throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -43,12 +32,4 @@ public class ProtoSerializeAndDeserializeTest {
                 .mergeFrom(dataBytes).build();
         assertEquals(COMPLEX_PROTO, proto);
     }
-
-//    @Test
-//    void jsonComplexSerializeAndDeserializeTest() throws IOException {
-//        String json = objectMapper.writeValueAsString(COMPLEX_DTO);
-//        ComplexDto dto = objectMapper.readValue(json, ComplexDto.class);
-//        assertEquals(COMPLEX_DTO, dto);
-//    }
-
 }

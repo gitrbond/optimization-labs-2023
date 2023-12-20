@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Builder
@@ -24,14 +25,14 @@ public class ComplexDto {
         // not boolean, otherwise duplicates
         Boolean isAClient;
 
-//        public String toJson() {
-//            return "{" +
-//                    "\"firstName\":\"" + firstName + '\"' +
-//                    ",\"secondName\":\"" + secondName + '\"' +
-//                    ",\"thirdName\":\"" + thirdName + '\"' +
-//                    ",\"isAClient\":" + isAClient +
-//                    '}';
-//        }
+        public String toJson() {
+            return "{" +
+                    "\"firstName\":\"" + firstName + '\"' +
+                    ",\"secondName\":\"" + secondName + '\"' +
+                    ",\"thirdName\":\"" + thirdName + '\"' +
+                    ",\"isAClient\":" + isAClient +
+                    '}';
+        }
     }
 
     @Data
@@ -47,30 +48,30 @@ public class ComplexDto {
             String name;
             long price;
 
-//            public String toJson() {
-//                return "{" +
-//                        "\"name\":\"" + name + '\"' +
-//                        ",\"price\":" + price +
-//                        '}';
-//            }
+            public String toJson() {
+                return "{" +
+                        "\"name\":\"" + name + '\"' +
+                        ",\"price\":" + price +
+                        '}';
+            }
         }
 
-//        public String toJson() {
-//            return "{" +
-//                    "\"id\":\"" + id + '\"' +
-//                    ",\"totalPrice\":" + totalPrice +
-//                    ",\"items\":[" + items.stream().map(Item::toJson).collect(Collectors.joining(",")) + ']' +
-//                    '}';
-//        }
+        public String toJson() {
+            return "{" +
+                    "\"id\":\"" + id + '\"' +
+                    ",\"totalPrice\":" + totalPrice +
+                    ",\"items\":[" + items.stream().map(Item::toJson).collect(Collectors.joining(",")) + ']' +
+                    '}';
+        }
     }
 
-//    public String toJson() {
-//        return "{" +
-//                "\"id\":\"" + id + '\"' +
-//                ",\"date\":\"" + date + '\"' +
-//                ",\"fio\":" + fio.toJson() +
-//                ",\"order\":" + order.toJson() +
-//                ",\"discount\":" + discount +
-//                '}';
-//    }
+    public String toJson() {
+        return "{" +
+                "\"id\":\"" + id + '\"' +
+                ",\"date\":\"" + date + '\"' +
+                ",\"fio\":" + fio.toJson() +
+                ",\"order\":" + order.toJson() +
+                ",\"discount\":" + discount +
+                '}';
+    }
 }

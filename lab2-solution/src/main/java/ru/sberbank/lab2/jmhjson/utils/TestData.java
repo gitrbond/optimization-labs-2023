@@ -2,8 +2,8 @@ package ru.sberbank.lab2.jmhjson.utils;
 
 import ru.sberbank.lab2.jmhjson.dto.ComplexDto;
 import ru.sberbank.lab2.jmhjson.dto.PlainDto;
-import ru.sberbank.lab2.protobuf.ComplexProto;
-import ru.sberbank.lab2.protobuf.PlainProto;
+import ru.sberbank.lab2.jmhjson.protobuf.ComplexProto;
+import ru.sberbank.lab2.jmhjson.protobuf.PlainProto;
 
 import java.util.List;
 

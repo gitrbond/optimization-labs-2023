@@ -11,12 +11,12 @@ public class PlainDto {
     double field3;
     Boolean field4;
 
-//    public String toJson() {
-//        return "{" +
-//                "\"field1\":\"" + field1 + '\"' +
-//                ",\"field2\":" + field2 +
-//                ",\"field3\":" + field3 +
-//                ",\"field4\":" + field4 +
-//                '}';
-//    }
+    public String toJson() {
+        return new StringBuilder().append("{")
+                .append("\"field1\":\"").append(field1).append('\"')
+                .append(",\"field2\":").append(field2)
+                .append(",\"field3\":").append(field3)
+                .append(",\"field4\":").append(field4)
+                .append('}').toString();
+    }
 }
