@@ -1,7 +1,6 @@
 package ru.sberbank.demo1;
 
 import org.springframework.stereotype.Service;
-import ru.sberbank.demo1.Item;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

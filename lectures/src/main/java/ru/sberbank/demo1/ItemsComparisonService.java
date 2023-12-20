@@ -15,9 +15,9 @@ import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Stream.concat;
-import static ru.sberbank.Utils.applyOrNull;
-import static ru.sberbank.Utils.filter;
-import static ru.sberbank.Utils.reMap;
+import static ru.sberbank.utils.Utils.applyOrNull;
+import static ru.sberbank.utils.Utils.filter;
+import static ru.sberbank.utils.Utils.reMap;
 
 @Service
 public class ItemsComparisonService {
